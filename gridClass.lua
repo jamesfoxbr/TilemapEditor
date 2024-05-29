@@ -24,19 +24,32 @@ function Grid:update(dt)
 end
 
 function Grid:draw()
+    --love.graphics.print(#self.tiles, 20, 20)
     for k, v in pairs(self.tiles) do
         v:draw()
     end
 end
 
 function Grid:setTile(row, column, cellX, cellY)
-    local gridX = row * self.width + self.x
-    local gridY = column * self.height + self.y
+    local b, i = Grid:checkIfEmpty(self, row, column) 
+    if b then
+        table.remove( self.tiles, i )
+    end
+        local gridX = row * self.width + self.x
+        local gridY = column * self.height + self.y
 
-    local tile = Tile(self.img, gridX, gridY, self.width, self.height, cellX, cellY)
-    table.insert(self.tiles, tile)
+        local tile = Tile(self.img, gridX, gridY, self.width, self.height, cellX, cellY)
+        table.insert(self.tiles, tile)
+    
 end
 
+function Grid:checkIfEmpty(self, row, column)
+    for i = 1, #self.tiles do
+        if math.floor(self.tiles[i].row / self.width) == row and math.floor(self.tiles[i].column / self.height) == column then
+            return true, i
+        end
+    end
+end
 ----------------------------------------------------------------------------------
 --                                 TILE CLASS
 ----------------------------------------------------------------------------------

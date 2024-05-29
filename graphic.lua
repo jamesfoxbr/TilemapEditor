@@ -1,4 +1,5 @@
-function startCanvas(color)
+---@diagnostic disable: undefined-global
+function startCanvas()
     love.graphics.setCanvas(canvas)
     love.graphics.clear(0, 0.5, 0) -- Background color
     love.graphics.setDefaultFilter("nearest", "nearest")
