@@ -10,9 +10,9 @@ Grid = Object:extend()
 
 function Grid:new(spriteSheet, x, y, width, height, rows, columns)
     self.x       = x
-    self.y       = y 
-    self.width   = width 
-    self.height  = height 
+    self.y       = y
+    self.width   = width
+    self.height  = height
     self.rows    = rows
     self.columns = columns
     self.img     = love.graphics.newImage(spriteSheet)
@@ -20,15 +20,20 @@ function Grid:new(spriteSheet, x, y, width, height, rows, columns)
 end
 
 function Grid:update(dt)
-    if love.keyboard.isDown('right') then
-        self.x = self.x + 20 * dt
-    end
+    
 end
 
 function Grid:draw()
     love.graphics.print(#self.tiles, 20, 20)
     for k, v in pairs(self.tiles) do
         v:draw()
+    end
+
+    for y = 0, math.floor(self.img:getWidth() / self.height) do
+        for x = 0, math.floor(self.img:getHeight() / self.width) do
+            local quad = love.graphics.newQuad(x * self.width, y * self.height, self.width, self.height, self.img)
+            love.graphics.draw(self.img, quad, 502 + (x * self.width), 2 + (y * self.height))
+        end
     end
 end
 
@@ -76,10 +81,11 @@ function Tile:new(img, row, column, width, height, cellX, cellY)
     self.image    = img
     self.width    = width
     self.height   = height
-    self.quad     = love.graphics.newQuad(cellX * width, cellY * height, width, height, img)
+    self.quad     = love.graphics.newQuad(cellX * width + GRID_X, cellY * height, width, height, img)
 end
 
 function Tile:draw()
     --love.graphics.rectangle("line", self.row, self.column, self.width, self.height)
     love.graphics.draw(self.image, self.quad, self.row, self.column)
 end
+

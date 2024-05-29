@@ -15,17 +15,14 @@ TILE_HEIGHT = 16
 GRID_X = 0
 GRID_Y = 0
 
+PANEL_X = 500
+PANEL_Y = 0
+
 function love.load()
     spriteSheet = "images/DragonOfScales001.png"
     local rows = 5
     local columns = 5
     grid = Grid(spriteSheet, GRID_X, GRID_Y, TILE_WIDTH, TILE_HEIGHT, rows, columns)
-
-    -- for y = 0, rows - 1  do
-    --     for x = 0, columns - 1 do
-    --         grid:setTile(x, y, -1, -1)
-    --     end
-    -- end
 
     grid:setTile(0, 0, 9, 0)
     grid:setTile(5, 4, 9, 0)
@@ -40,8 +37,8 @@ end
 
 function love.draw()
     startCanvas()
-    grid:draw()
     drawTileset()
+    grid:draw()
     endCanvas()
 end
 
@@ -60,14 +57,10 @@ function love.mousepressed( x, y, button, istouch, presses )
     end
 end
 
-function drawTileset()
-    local positionX = 500
-    
+function drawTileset()    
     love.graphics.setColor(0, 0, 0, 1)
-    love.graphics.rectangle("fill", positionX, 0, 500, 500)
+    love.graphics.rectangle("fill", PANEL_X, PANEL_Y, 500, 500)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.draw(preview, positionX, 0)
-    
 end
 
 
